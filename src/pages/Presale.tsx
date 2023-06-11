@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 
 const Presale = () => {
   const { data: signer } = useSigner();
-  const staticProvider = new ethers.providers.StaticJsonRpcProvider('https://bsc-dataseed1.binance.org/');
+  const staticProvider = new ethers.providers.StaticJsonRpcProvider('https://bsc-dataseed1.defibit.io');
 
   const floorTokenAmount = 0.0001;
 
