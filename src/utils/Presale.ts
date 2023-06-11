@@ -18,7 +18,7 @@ export const getTokenAmountPerUSDT = async (provider: ethers.providers.Provider 
 export const buyNMDToken = async (USDTAmount: number, signer: ethers.Signer ) => {
     const presale = Presale__factory.connect(presaleContractAddress, signer);
     try {
-        await presale.buyTokens(USDTAmount);
+        await presale.buyTokens(ethers.utils.parseEther(USDTAmount + ""))
         console.log("success");
         return "success";
     } catch(err) {
