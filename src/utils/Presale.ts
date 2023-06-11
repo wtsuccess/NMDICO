@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { presaleContractAddress } from "../constants/basic"
-import { Presale__factory } from "../types"
+import { presaleContractAddress, usdtContractAddress } from "../constants/basic"
+import { Presale__factory, USDT__factory } from "../types"
 
 export const getTokenAmountPerUSDT = async (provider: ethers.providers.Provider | ethers.Signer) => {
     const presale = Presale__factory.connect(presaleContractAddress, provider);
@@ -18,7 +18,9 @@ export const getTokenAmountPerUSDT = async (provider: ethers.providers.Provider 
 export const buyNMDToken = async (USDTAmount: number, signer: ethers.Signer ) => {
     const presale = Presale__factory.connect(presaleContractAddress, signer);
     try {
-        await presale.buyTokens(ethers.utils.parseEther(USDTAmount + ""))
+        const usdt = USDT__factory.connect(presaleContractAddress, signer);
+        await usdt.approve(presaleContractAddress, USDTAmount);
+        await presale.buyTokens(ethers.utils.parseEther(USDTAmount + ""));
         console.log("success");
         return "success";
     } catch(err) {

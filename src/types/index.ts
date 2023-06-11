@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Presale } from "./Presale";
+export type { USDT } from "./USDT";
 export * as factories from "./factories";
 export { Presale__factory } from "./factories/Presale__factory";
+export { USDT__factory } from "./factories/USDT__factory";
