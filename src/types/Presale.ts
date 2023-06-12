@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -31,6 +30,7 @@ export interface PresaleInterface extends utils.Interface {
   functions: {
     "buyTokens(uint256)": FunctionFragment;
     "endsale()": FunctionFragment;
+    "getTokenPrice()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setTokenAddress(address)": FunctionFragment;
@@ -41,7 +41,7 @@ export interface PresaleInterface extends utils.Interface {
     "transfer2wallet(address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "usdt()": FunctionFragment;
-    "withdraw2Owner()": FunctionFragment;
+    "withdraw2Owner(uint256)": FunctionFragment;
     "withdrawUSDT(uint256)": FunctionFragment;
   };
 
@@ -49,6 +49,7 @@ export interface PresaleInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "buyTokens"
       | "endsale"
+      | "getTokenPrice"
       | "owner"
       | "renounceOwnership"
       | "setTokenAddress"
@@ -68,6 +69,10 @@ export interface PresaleInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "endsale", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getTokenPrice",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -98,7 +103,7 @@ export interface PresaleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "usdt", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdraw2Owner",
-    values?: undefined
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawUSDT",
@@ -107,6 +112,10 @@ export interface PresaleInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: "buyTokens", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "endsale", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getTokenPrice",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -235,12 +244,14 @@ export interface Presale extends BaseContract {
   functions: {
     buyTokens(
       usdtAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string }
+      overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
     endsale(
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -278,6 +289,7 @@ export interface Presale extends BaseContract {
     usdt(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw2Owner(
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
@@ -289,12 +301,14 @@ export interface Presale extends BaseContract {
 
   buyTokens(
     usdtAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string }
+    overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
   endsale(
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
+
+  getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -332,6 +346,7 @@ export interface Presale extends BaseContract {
   usdt(overrides?: CallOverrides): Promise<string>;
 
   withdraw2Owner(
+    amount: BigNumberish,
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
@@ -347,6 +362,8 @@ export interface Presale extends BaseContract {
     ): Promise<void>;
 
     endsale(overrides?: CallOverrides): Promise<void>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -381,7 +398,10 @@ export interface Presale extends BaseContract {
 
     usdt(overrides?: CallOverrides): Promise<string>;
 
-    withdraw2Owner(overrides?: CallOverrides): Promise<void>;
+    withdraw2Owner(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     withdrawUSDT(
       amount: BigNumberish,
@@ -415,10 +435,12 @@ export interface Presale extends BaseContract {
   estimateGas: {
     buyTokens(
       usdtAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string }
+      overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
     endsale(overrides?: Overrides & { from?: string }): Promise<BigNumber>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -456,6 +478,7 @@ export interface Presale extends BaseContract {
     usdt(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw2Owner(
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
@@ -468,12 +491,14 @@ export interface Presale extends BaseContract {
   populateTransaction: {
     buyTokens(
       usdtAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string }
+      overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
     endsale(
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -511,6 +536,7 @@ export interface Presale extends BaseContract {
     usdt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw2Owner(
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 

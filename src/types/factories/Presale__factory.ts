@@ -14,6 +14,11 @@ const _abi = [
         name: "_tokenaddress",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "_usdtAddress",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -105,7 +110,7 @@ const _abi = [
     ],
     name: "buyTokens",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -113,6 +118,19 @@ const _abi = [
     name: "endsale",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTokenPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -245,7 +263,13 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "withdraw2Owner",
     outputs: [],
     stateMutability: "nonpayable",

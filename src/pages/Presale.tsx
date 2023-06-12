@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSigner } from "wagmi";
 import { buyNMDToken, getTokenAmountPerUSDT } from "../utils/Presale";
 import { ethers } from "ethers";
+import "./Presale.css";
 
 const Presale = () => {
   const { data: signer } = useSigner();
@@ -52,41 +53,35 @@ const Presale = () => {
   };
 
   return (
-    <div className="text-white bg-[#0d0d0d] mx-auto w-1/2 py-5 px-5 rounded-[24px]">
-      <div className="border-b-white">
-        <h4 className="font-[500] text-[20px]">Buy NMD Token</h4>
-        <p>
-          Minimum Purchase {floorTokenAmount} USDT (
-          {floorTokenAmount * tokenAmountPerUSDT} NMD)
-        </p>
-      </div>
-      <div className="p-5">
-        <div className="p-[15px] mb-[10px] bg-black rounded-[10px]">
-          <p>Enter USDT Value to purchase</p>
-          <input
-            type="number"
-            placeholder="0"
-            onChange={buyUSDTValueChange}
-            value={USDTAmount}
-            className="bg-zinc-800 " 
-          />
-          <p className="text-[#fa1111]">{USDTStatus}</p>
+    <div className="bg-gray-900 mx-auto w-1/2 py-5 px-5 rounded-lg text-gray-200 font-sans">
+        <div className="border-b border-white">
+            <h4 className="text-2xl font-medium">Buy NMD Token</h4>
+            <p>Minimum Purchase {floorTokenAmount} USDT ({floorTokenAmount * tokenAmountPerUSDT} NMD)</p>
         </div>
-        <div className="p-[15px] mb-10 bg-black rounded-[10px]">
-          <p>
-            NMD Amount :{" "}
-            <span className="text-orange">{tokenAmount || 0} NMD</span>
-          </p>
+        <div className="p-5">
+            <div className="mb-5 bg-black rounded-lg p-3">
+            <p>Enter USDT Value to purchase</p>
+            <input
+                type="number"
+                placeholder="0"
+                onChange={buyUSDTValueChange}
+                value={USDTAmount}
+                className="bg-gray-800 py-2 px-3 text-white appearance-none"
+            />
+            <p className="text-red-500">{USDTStatus}</p>
+            </div>
+            <div className="mb-5 bg-black rounded-lg p-3">
+            <p>NMD Amount : <span className="text-orange">{tokenAmount || 0} NMD</span></p>
+            </div>
+            <div>
+            <input
+                type="button"
+                value="Buy NMD Token"
+                className="py-3 px-5 rounded-lg bg-orange-500 hover:bg-blue-700 text-sm cursor-pointer"
+                onClick={handleBuyPressed}
+            />
+            </div>
         </div>
-        <div>
-          <input
-            type="button"
-            value="Buy NMD Token"
-            className="rounded-lg bg-[#ff7500] py-5 px-5 cursor-pointer hover:bg-sky-700"
-            onClick={handleBuyPressed}
-          />
-        </div>
-      </div>
     </div>
   );
 };
