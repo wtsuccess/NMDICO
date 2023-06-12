@@ -6,8 +6,6 @@ export const getTokenAmountPerUSDT = async (provider: ethers.providers.Provider 
     const presale = Presale__factory.connect(presaleContractAddress, provider);
     try {
         const tokenAmountPerUSDT = await presale.tokenprice();
-        console.log(tokenAmountPerUSDT);
-        console.log(ethers.utils.parseEther( tokenAmountPerUSDT + ""));
         return tokenAmountPerUSDT.toNumber();
     } catch (err) {
         console.log(err);
@@ -19,7 +17,9 @@ export const buyNMDToken = async (USDTAmount: number, signer: ethers.Signer ) =>
     const presale = Presale__factory.connect(presaleContractAddress, signer);
     try {
         const usdt = USDT__factory.connect(usdtContractAddress, signer);
-        await usdt.approve(presaleContractAddress, ethers.utils.parseEther(USDTAmount + ""));
+        if ((await usdt.allowance(await signer.getAddress(), presaleContractAddress)).lt(ethers.utils.parseUnits(USDTAmount + "", 18))) {
+            await usdt.approve(presaleContractAddress, ethers.utils.parseEther(USDTAmount + ""));
+        }
         await presale.buyTokens(ethers.utils.parseEther(USDTAmount + ""));
         console.log("success");
         return "success";
