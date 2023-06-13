@@ -10,7 +10,7 @@ const Presale = () => {
   const { data: signer } = useSigner();
   const staticProvider = new ethers.providers.StaticJsonRpcProvider('https://bsc-dataseed1.defibit.io');
 
-  const floorTokenAmount = 10;
+  const floorTokenAmount = 0.01;
 
   const [tokenAmountPerUSDT, setTokenAmountPerUSDT] = useState(0);
 
