@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSigner } from "wagmi";
 import { buyNMDToken, getTokenAmountPerUSDT } from "../utils/Presale";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { ethers } from "ethers";
 import "./Presale.css";
 
@@ -15,6 +17,7 @@ const Presale = () => {
   const [USDTAmount, setUSDTAmount] = useState(0);
   const [tokenAmount, setTokenAmount] = useState(0);
   const [USDTStatus, setUSDTStatus] = useState("");
+  const [connectStatus, setConnectStatus] = useState("");
 
   const buyUSDTValueChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setUSDTAmount(parseFloat(evt.target.value));
@@ -24,7 +27,6 @@ const Presale = () => {
   const loadBalance = async () => {
     if (staticProvider) {
       setTokenAmountPerUSDT(await getTokenAmountPerUSDT(staticProvider));
-      console.log(tokenAmountPerUSDT);
     } else {
       setTokenAmountPerUSDT(0);
     }
@@ -41,19 +43,22 @@ const Presale = () => {
   }, [USDTAmount]);
 
   const handleBuyPressed = async () => {
-    if (signer) {
-        if (USDTAmount < floorTokenAmount) {
-            console.log(`USDT Amount should be over ${floorTokenAmount}`);
-            return;
-        }
-      await buyNMDToken(USDTAmount, signer);
-    } else {
-      console.log("Connect Wallet!");
+    console.log(signer);
+    
+    if (!signer) {
+      setConnectStatus("Connect Wallet!");
+      return;
+    } 
+    if (!USDTAmount || USDTAmount < floorTokenAmount) {
+        return;
     }
+    setConnectStatus("");
+    if (await buyNMDToken(USDTAmount, signer)) toast.success("Buy Success", {theme: "dark"});
+    else toast.error("Buy Failed", {theme:"dark"});
   };
 
   return (
-    <div className="bg-gray-900 mx-auto w-full sm:w-1/2 md:w-1/3 py-5 px-4 sm:px-5 rounded-lg text-gray-200 font-sans mx-3">
+    <div className="bg-gray-900 w-full sm:w-1/2 lg:w-1/3 py-5 px-4 sm:px-5 rounded-lg text-gray-200 font-sans mx-3">
       <div className="border-b border-white p-4 sm:p-5">
         <h4 className="text-xl sm:text-2xl font-medium">Buy NMD Token</h4>
         <p className="text-sm sm:text-base">Minimum Purchase {floorTokenAmount} USDT ({floorTokenAmount * tokenAmountPerUSDT} NMD)</p>
@@ -80,6 +85,11 @@ const Presale = () => {
             className="py-2 px-4 rounded-lg bg-orange-500 hover:bg-blue-700 text-sm sm:text-base cursor-pointer"
             onClick={handleBuyPressed}
           />
+          {
+            !signer && (
+              <p className="text-red-500 py-2 sm:py-3 text-sm sm:text-base">{connectStatus}</p>
+            )
+          }
         </div>
       </div>
     </div>

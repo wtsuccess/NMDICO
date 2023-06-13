@@ -21,10 +21,8 @@ export const buyNMDToken = async (USDTAmount: number, signer: ethers.Signer ) =>
             await usdt.approve(presaleContractAddress, ethers.utils.parseEther(USDTAmount + ""));
         }
         await presale.buyTokens(ethers.utils.parseEther(USDTAmount + ""));
-        console.log("success");
-        return "success";
+        return true;
     } catch(err) {
-        console.log(err);
-        return "failed";
+        return false;
     }
 } 

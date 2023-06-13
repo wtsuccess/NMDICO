@@ -10,6 +10,9 @@ import { RainbowKitProvider, getDefaultWallets, darkTheme } from '@rainbow-me/ra
 import { bsc } from "wagmi/chains";
 
 import { publicProvider } from 'wagmi/providers/public';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const { chains, provider } = configureChains(
   [bsc],
   [publicProvider()]
@@ -34,6 +37,7 @@ root.render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={darkTheme()}>    
+        <ToastContainer />
         <App />
       </RainbowKitProvider>
     </WagmiConfig>
