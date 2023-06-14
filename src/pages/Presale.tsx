@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSigner } from "wagmi";
-import { buyNMDToken, getTokenAmountPerUSDT } from "../utils/Presale";
-import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { getTokenAmountPerUSDT } from "../utils/Presale";
+import { useBuyToken } from "../hooks/useBuyToken";
 import { ethers } from "ethers";
 import "./Presale.css";
 
@@ -11,13 +10,14 @@ const Presale = () => {
   const staticProvider = new ethers.providers.StaticJsonRpcProvider('https://bsc-dataseed1.defibit.io');
 
   const floorTokenAmount = 0.01;
-
   const [tokenAmountPerUSDT, setTokenAmountPerUSDT] = useState(0);
-
   const [USDTAmount, setUSDTAmount] = useState(0);
   const [tokenAmount, setTokenAmount] = useState(0);
   const [USDTStatus, setUSDTStatus] = useState("");
   const [connectStatus, setConnectStatus] = useState("");
+  
+
+  const {send: buyNMDToken, state: buyTransactionState} = useBuyToken();
 
   const buyUSDTValueChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setUSDTAmount(parseFloat(evt.target.value));
@@ -43,8 +43,6 @@ const Presale = () => {
   }, [USDTAmount]);
 
   const handleBuyPressed = async () => {
-    console.log(signer);
-    
     if (!signer) {
       setConnectStatus("Connect Wallet!");
       return;
@@ -53,8 +51,7 @@ const Presale = () => {
         return;
     }
     setConnectStatus("");
-    if (await buyNMDToken(USDTAmount, signer)) toast.success("Buy Success", {theme: "dark"});
-    else toast.error("Buy Failed", {theme:"dark"});
+    await buyNMDToken(USDTAmount, signer);
   };
 
   return (
@@ -79,15 +76,28 @@ const Presale = () => {
           <p className="text-sm sm:text-base">NMD Amount: <span className="text-[#ff7500]">{tokenAmount || 0} NMD</span></p>
         </div>
         <div>
-          <input
+          <button
             type="button"
             value="Buy NMD Token"
             className="py-2 px-4 rounded-lg bg-orange-500 hover:bg-blue-700 text-sm sm:text-base cursor-pointer"
             onClick={handleBuyPressed}
-          />
+            disabled={buyTransactionState?.status === 'Pending'}
+          >
+            Buy NMD Token
+          </button>
           {
             !signer && (
               <p className="text-red-500 py-2 sm:py-3 text-sm sm:text-base">{connectStatus}</p>
+            )
+          }
+          {
+            buyTransactionState?.status === 'Failed' && (
+              <p className="text-red-500 py-2 sm:py-3 text-sm sm:text-base">Buy Failed</p>
+            )
+          }
+          {
+            buyTransactionState?.status === 'Success' && (
+              <p className="text-green-500 py-2 sm:py-3 text-sm sm:text-base">Transaction successful</p>
             )
           }
         </div>
