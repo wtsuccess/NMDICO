@@ -16,7 +16,6 @@ const Presale = () => {
   const [USDTStatus, setUSDTStatus] = useState("");
   const [connectStatus, setConnectStatus] = useState("");
   
-
   const {send: buyNMDToken, state: buyTransactionState} = useBuyToken();
 
   const buyUSDTValueChange = (evt: ChangeEvent<HTMLInputElement>) => {

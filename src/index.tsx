@@ -6,28 +6,47 @@ import reportWebVitals from './reportWebVitals';
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { WagmiConfig, configureChains, createClient } from 'wagmi';
-import { RainbowKitProvider, getDefaultWallets, darkTheme } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, darkTheme, connectorsForWallets } from '@rainbow-me/rainbowkit';
+import {
+  injectedWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 import { bsc } from "wagmi/chains";
 
 import { publicProvider } from 'wagmi/providers/public';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { trustWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
+
 const { chains, provider } = configureChains(
   [bsc],
   [publicProvider()]
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "NMD ICO",
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains }),
+      trustWallet({ chains }),
+      walletConnectWallet({ chains }),
+    ],
+  },
+]);
+
+// const { connectors } = getDefaultWallets({
+//   appName: "NMD ICO",
+//   chains,
+// });
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
 });
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
