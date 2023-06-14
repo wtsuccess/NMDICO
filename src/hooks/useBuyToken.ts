@@ -2,10 +2,11 @@ import { useCallback, useState } from "react";
 import { presaleContractAddress, usdtContractAddress } from "../constants/basic";
 import { Presale__factory, USDT__factory } from "../types";
 import { Signer, ethers } from "ethers";
+import { getMetamaskErrorMessage } from "../utils/metamask";
 
 interface TransactionStatus {
     status: 'Pending' | 'Failed' | 'Success',
-    errMsg?: any
+    errMsg?: string
 }
 
 export const useBuyToken = () => {
@@ -29,7 +30,7 @@ export const useBuyToken = () => {
             console.log("error while buying: ", err);
             setTransactionStatus({
                 status: 'Failed',
-                errMsg: err
+                errMsg: getMetamaskErrorMessage(err),
             })
         }
     }, []);

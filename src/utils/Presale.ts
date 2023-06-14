@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { presaleContractAddress } from "../constants/basic"
-import { Presale__factory } from "../types"
+import { presaleContractAddress } from "../constants/basic";
+import { Presale__factory } from "../types";
 
 export const getTokenAmountPerUSDT = async (provider: ethers.providers.Provider | ethers.Signer) => {
     const presale = Presale__factory.connect(presaleContractAddress, provider);

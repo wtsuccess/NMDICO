@@ -92,7 +92,7 @@ const Presale = () => {
           }
           {
             buyTransactionState?.status === 'Failed' && (
-              <p className="text-red-500 py-2 sm:py-3 text-sm sm:text-base">Buy Failed</p>
+              <p className="text-red-500 py-2 sm:py-3 text-sm sm:text-base">{buyTransactionState.errMsg}</p>
             )
           }
           {
