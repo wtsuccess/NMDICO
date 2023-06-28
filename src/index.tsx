@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './assets/styles/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { WagmiConfig, configureChains, createClient } from 'wagmi';
-import { RainbowKitProvider, darkTheme, connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { RainbowKitProvider, darkTheme, connectorsForWallets, cssStringFromTheme, lightTheme } from '@rainbow-me/rainbowkit';
 import {
   injectedWallet,
   walletConnectWallet,
@@ -56,6 +56,21 @@ root.render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={darkTheme()}>    
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            :root {
+              ${cssStringFromTheme(lightTheme)}
+            }
+
+            html[data-dark] {
+              ${cssStringFromTheme(darkTheme, {
+                extends: lightTheme,
+              })}
+            }
+          `,
+        }}
+      />
         <ToastContainer />
         <App />
       </RainbowKitProvider>

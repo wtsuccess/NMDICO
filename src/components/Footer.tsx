@@ -1,20 +1,71 @@
-import React from "react";
-import 'font-awesome/css/font-awesome.min.css';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { addNMDToMetamask, addUSDTToMetamask } from "../utils/metamask";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 const Footer = () => {
-    return (
-        <div className=" bg-zinc-800">
-            <div className="container mx-auto flex justify-between py-4 px-6 items-center text-white">
-                <p className="flex-1">Copyright {new Date().getFullYear()} namomudra.com - All Rights Reserved.</p>
-                <p className="flex-1 text-right">
-                    <i className="fa fa-twitter cursor-pointer px-3" aria-hidden="true"></i>
-                    <i className="fa fa-github cursor-pointer px-3" aria-hidden="true"></i>
-                    <i className="fa fa-facebook cursor-pointer px-3" aria-hidden="true"></i>
-                    <i className="fa fa-google cursor-pointer px-3" aria-hidden="true"></i>
-                </p>
-            </div>
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((isOpen) => !isOpen);
+  };
+  return (
+    <footer className="bg-black relative">
+      <div className="flex justify-between py-2 px-6 items-center text-white text-sm md:text-lg">
+        <ul className="flex justify-between">
+          <li className="pr-[20px] relative">
+            <FontAwesomeIcon
+              icon={faGlobe}
+              size="sm"
+              onClick={toggleDropdown}
+              className="px-[5px]"
+            />
+            {isOpen && (
+              <ul
+                className="bg-black my-[25px] mx-[5px] z-20 py-2 w-[150px] px-2 text-[#b8add2] absolute origin-[10px, 39px]"
+                onClick={(e) => {
+                  setIsOpen(false);
+                }}
+              >
+                <li className="cursor-pointer text-left  font-thin ">
+                  English
+                </li>
+                <li className="cursor-pointer text-left  font-thin">Hindi</li>
+              </ul>
+            )}
+            EN
+          </li>
+          <li className="px-[10px]">
+            <FontAwesomeIcon icon={faTwitter} size="sm" />
+          </li>
+          <li className="px-[10px]">
+            <FontAwesomeIcon icon={faPaperPlane} size="sm" />
+          </li>
+          <li className="px-[10px]">
+            <FontAwesomeIcon icon={faGithub} size="sm" />
+          </li>
+        </ul>
+        <div className="flex justify-center">
+          <button
+            type="button"
+            className="py-2 px-4 mx-4 rounded-lg bg-orange-500 hover:bg-blue-700 text-[12px] sm:text-base cursor-pointer"
+            onClick={addNMDToMetamask}
+          >
+            ADD NMD
+          </button>
+          <button
+            type="button"
+            className="py-2 px-4 rounded-lg bg-[#40b126] hover:bg-blue-700 text-[12px] sm:text-base cursor-pointer"
+            onClick={addUSDTToMetamask}
+          >
+            ADD USDT
+          </button>
         </div>
-    );
-}
+      </div>
+    </footer>
+  );
+};
 
 export default Footer;
