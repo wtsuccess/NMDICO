@@ -4,7 +4,6 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { addNMDToMetamask, addUSDTToMetamask } from "../utils/metamask";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
-import { useSigner } from "wagmi";
 
 const Footer = () => {
   // const [isOpen, setIsOpen] = useState(false);
