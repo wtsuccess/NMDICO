@@ -1,5 +1,4 @@
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import { ConnectionButton } from "./ConnectionButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,7 +16,7 @@ const Header = () => {
         <div className="flex items-center justify-between ">
           <div className="relative">
             <FontAwesomeIcon icon={faGlobe} className="pr-4" size="xl"/>
-            {/* {isOpen && (
+            {/* {isOpen && (`
               <div className="absolute top-[40px] left-[0]">
                 <span className="w-[25px] h-[25px] inline-block bg-black rotate-45 cursor-pointer z-0"></span>
                 <ul
