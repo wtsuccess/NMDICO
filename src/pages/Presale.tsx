@@ -5,6 +5,7 @@ import { useBuyToken } from "../hooks/useBuyToken";
 import { ethers } from "ethers";
 import { ConnectionButton2 } from "../components/ConnectionButton2";
 import { usdtContractAddress } from "../constants/basic";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Presale = () => {
   const { data: signer } = useSigner();
@@ -106,7 +107,7 @@ const Presale = () => {
           >
             Buy NMD Token
           </button>
-          <ConnectionButton2 />
+          <ConnectButton />
         </div>
         {!signer && (
           <p className="text-[#fa1111] py-2 sm:py-3 text-[12px] sm:text-base text-right">
