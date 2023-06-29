@@ -4,11 +4,11 @@ import { ConnectionButton } from "./ConnectionButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen((isOpen) => !isOpen);
+  // };
 
   return (
     <header className="shadow-md py-3 px-2">
@@ -16,8 +16,8 @@ const Header = () => {
         <span className="cursor-pointer text-[26px] font-[400]">NamoMudra</span>
         <div className="flex items-center justify-between ">
           <div className="relative">
-            <FontAwesomeIcon icon={faGlobe} onClick={toggleDropdown} className="pr-4" size="xl"/>
-            {isOpen && (
+            <FontAwesomeIcon icon={faGlobe} className="pr-4" size="xl"/>
+            {/* {isOpen && (
               <div className="absolute top-[40px] left-[0]">
                 <span className="w-[25px] h-[25px] inline-block bg-black rotate-45 cursor-pointer z-0"></span>
                 <ul
@@ -32,7 +32,7 @@ const Header = () => {
                   <li className="cursor-pointer text-left  font-thin">Hindi</li>
                 </ul>
               </div>
-            )}
+            )} */}
           </div>
           <ConnectionButton />
         </div>

@@ -4,37 +4,26 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { addNMDToMetamask, addUSDTToMetamask } from "../utils/metamask";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import { useSigner } from "wagmi";
 
 const Footer = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  // const { data: signer } = useSigner();
 
-  const toggleDropdown = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen((isOpen) => !isOpen);
+  // };
   return (
-    <footer className="bg-black relative">
+    <footer className="bg-black">
       <div className="flex justify-between py-2 px-6 items-center text-white text-sm md:text-lg">
         <ul className="flex justify-between">
           <li className="pr-[20px] relative">
             <FontAwesomeIcon
               icon={faGlobe}
               size="sm"
-              onClick={toggleDropdown}
+              // onClick={toggleDropdown}
               className="px-[5px]"
             />
-            {isOpen && (
-              <ul
-                className="bg-black my-[25px] mx-[5px] z-20 py-2 w-[150px] px-2 text-[#b8add2] absolute origin-[10px, 39px]"
-                onClick={(e) => {
-                  setIsOpen(false);
-                }}
-              >
-                <li className="cursor-pointer text-left  font-thin ">
-                  English
-                </li>
-                <li className="cursor-pointer text-left  font-thin">Hindi</li>
-              </ul>
-            )}
             EN
           </li>
           <li className="px-[10px]">

@@ -38,18 +38,22 @@ export const addUSDTToMetamask = async () => {
   // const tokenImage = "http://placekitten.com/200/300";
 
   if (window.ethereum) {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20", // Initially only supports ERC20, but eventually more!
-        options: {
-          address: usdtContractAddress, // The address that the token is at.
-          symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-          decimals: tokenDecimals, // The number of decimals in the token
-          // image: tokenImage, // A string url of the token logo
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20", // Initially only supports ERC20, but eventually more!
+          options: {
+            address: usdtContractAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            // image: tokenImage, // A string url of the token logo
+          },
         },
-      },
-    });
+      });
+    } catch (err) {
+      console.log("Add reverted");
+    }
   }
 };
 
@@ -59,17 +63,21 @@ export const addNMDToMetamask = async () => {
   // const tokenImage = "http://placekitten.com/200/300";
 
   if (window.ethereum) {
-    await window.ethereum.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20", // Initially only supports ERC20, but eventually more!
-        options: {
-          address:NMDAddress, // The address that the token is at.
-          symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-          decimals: tokenDecimals, // The number of decimals in the token
-          // image: tokenImage, // A string url of the token logo
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20", // Initially only supports ERC20, but eventually more!
+          options: {
+            address: NMDAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            // image: tokenImage, // A string url of the token logo
+          },
         },
-      },
-    });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
