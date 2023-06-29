@@ -107,7 +107,7 @@ const Presale = () => {
           >
             Buy NMD Token
           </button>
-          <ConnectButton />
+          {/* <ConnectButton /> */}
         </div>
         {!signer && (
           <p className="text-[#fa1111] py-2 sm:py-3 text-[12px] sm:text-base text-right">
