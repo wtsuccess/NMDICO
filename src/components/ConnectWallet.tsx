@@ -20,7 +20,7 @@ const ConnectWallet = () => {
 
   return (
     <button onClick={handleConnectButtonClick}>
-      {!address ? "Connect" : "Disconnect"}
+      {!address ? "Connect Wallet" : "Disconnect"}
     </button>
   );
 };
