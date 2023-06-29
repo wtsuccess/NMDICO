@@ -1,6 +1,7 @@
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { ConnectionButton } from "./ConnectionButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Header = () => {
   // const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +34,7 @@ const Header = () => {
               </div>
             )} */}
           </div>
-          <ConnectionButton />
+          <ConnectButton />
         </div>
       </div>
     </header>
