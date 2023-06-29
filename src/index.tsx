@@ -1,79 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './assets/styles/index.scss';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import "@rainbow-me/rainbowkit/styles.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./assets/styles/index.scss";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import { WagmiConfig, configureChains, createClient } from 'wagmi';
-import { RainbowKitProvider, darkTheme, connectorsForWallets, cssStringFromTheme, lightTheme } from '@rainbow-me/rainbowkit';
-import {
-  injectedWallet,
-  walletConnectWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { bsc } from "wagmi/chains";
+import { WagmiConfig } from "wagmi";
 
-import { publicProvider } from 'wagmi/providers/public';
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Web3Modal } from "@web3modal/react";
+import { ethereumClient, projectId, wagmiClient } from "./constants/wagmi-config";
 
-import { trustWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
-
-const { chains, provider } = configureChains(
-  [bsc],
-  [publicProvider()]
-);
-
-const connectors = connectorsForWallets([
-  {
-    groupName: 'Recommended',
-    wallets: [
-      injectedWallet({ chains }),
-      metaMaskWallet({ chains }),
-      trustWallet({ chains }),
-      walletConnectWallet({ chains }),
-    ],
-  },
-]);
-
-// const { connectors } = getDefaultWallets({
-//   appName: "NMD ICO",
-//   chains,
-// });
-
-const wagmiClient = createClient({
-  autoConnect: true,
-  connectors,
-  provider,
-});
-
+const walletIds = {
+  metamask: "c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96",
+  trustWallet: "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0",
+};
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} theme={darkTheme()}>    
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            :root {
-              ${cssStringFromTheme(lightTheme)}
-            }
-
-            html[data-dark] {
-              ${cssStringFromTheme(darkTheme, {
-                extends: lightTheme,
-              })}
-            }
-          `,
+      <App />
+      <Web3Modal
+        projectId={projectId}
+        ethereumClient={ethereumClient}
+        themeMode="dark"
+        explorerRecommendedWalletIds={[
+          walletIds.metamask,
+          walletIds.trustWallet,
+        ]}
+        themeVariables={{
+          "--w3m-background-color": "#12B3A8",
+          "--w3m-accent-color": "#12B3A8",
         }}
       />
-        <ToastContainer />
-        <App />
-      </RainbowKitProvider>
     </WagmiConfig>
   </React.StrictMode>
 );
