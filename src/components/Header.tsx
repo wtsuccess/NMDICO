@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Menu from "./Menu";
+import logo from "../assets/images/logo.png";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -11,7 +12,7 @@ const Header = () => {
             href="http://namomudra.com"
             className="cursor-pointer text-[26px] block text-white"
           >
-            <img src="../assets/images/logo.png" alt="" />
+            <img src={logo} alt="" width="50px" height="50px" className="inline-block mr-3"/>
             <span className="font-black">NAMO</span>MUDRA
           </a>
           <div className="hidden md:block">
