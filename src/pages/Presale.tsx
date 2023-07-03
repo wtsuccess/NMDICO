@@ -3,9 +3,7 @@ import { useSigner, useBalance } from "wagmi";
 import { getTokenAmountPerUSDT } from "../utils/Presale";
 import { useBuyToken } from "../hooks/useBuyToken";
 import { ethers } from "ethers";
-import { ConnectionButton2 } from "../components/ConnectionButton2";
 import { usdtContractAddress } from "../constants/basic";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ConnectWallet from "../components/ConnectWallet";
 
 const Presale = () => {
@@ -70,7 +68,7 @@ const Presale = () => {
   };
 
   return (
-    <div className="bg-[#0d0d0d] w-full sm:w-1/2 lg:w-1/3 py-5 px-4 sm:px-5 rounded-lg text-gray-200 font-sans mx-3">
+    <div className="bg-[#0d0d0d] w-full py-5 rounded-lg text-gray-200 font-sans mx-3">
       <div className="border-b border-white p-4 sm:p-5">
         <h4 className="text-xl sm:text-2xl font-medium">Buy NMD Token</h4>
         <p className="text-[12px] sm:text-base">

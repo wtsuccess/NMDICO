@@ -1,25 +1,43 @@
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ConnectWallet from "./ConnectWallet";
+import { useState } from "react";
+import Menu from "./Menu";
 
 const Header = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   return (
-    <header className="shadow-md py-3 px-2">
-      <div className="mx-auto flex justify-between py-1 px-6 items-center text-white">
-        <a
-          href="http://namomudra.com"
-          className="cursor-pointer text-[26px] font-[400]"
-        >
-          NamoMudra
-        </a>
-        <div className="flex items-center justify-between ">
-          <div className="relative">
-            <FontAwesomeIcon icon={faGlobe} className="pr-4" size="xl" />
+    <header className="py-3 px-2">
+      <div className="container mx-auto">
+        <div className="mx-auto flex justify-between py-1 px-6 items-center ">
+          <a
+            href="http://namomudra.com"
+            className="cursor-pointer text-[26px] block text-white"
+          >
+            <img src="../assets/images/logo.png" alt="" />
+            <span className="font-black">NAMO</span>MUDRA
+          </a>
+          <div className="hidden md:block">
+            <Menu />
           </div>
-          <div className="bg-black px-2 py-1 rounded-md">
-            <ConnectWallet />
-          </div>
+          <button
+            type="button"
+            className="border-white border-[1px] md:hidden bg-transparent inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white focus:outline-none focus:text-white transition duration-150 ease-in-out"
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+          >
+            <svg
+              className="h-5 w-9"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
         </div>
+        <div className="md:hidden">{showMobileMenu && <Menu />}</div>
       </div>
     </header>
   );
